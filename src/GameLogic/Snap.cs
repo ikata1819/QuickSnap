@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using SwinGameSDK;
 
 #if DEBUG
@@ -36,12 +36,8 @@ namespace CardGames.GameLogic
 		/// </summary>
 		public Snap ()
 		{
-	_deck = new Deck ();
-	_gameTimer = SwinGame.CreateTimer ();
-	}
-	
-
-
+			_deck = new Deck ();
+		}
 
 		/// <summary>
 		/// Gets the card on the top of the "flip" stack. This card will be face up.
@@ -96,7 +92,6 @@ namespace CardGames.GameLogic
 				_deck.Shuffle ();		// Return the cards and shuffle
 
 				FlipNextCard ();		// Flip the first card...
-				_gameTimer.Start();
 			}
 		}
 			
@@ -116,11 +111,7 @@ namespace CardGames.GameLogic
 		/// </summary>
 		public void Update()
 		{
-			if (_gameTimer.Ticks > _flipTime)
-{
-_gameTimer.Reset ();
-FlipNextCard ();
-}
+			//TODO: implement update to automatically slip cards!
 		}
 
 		/// <summary>
@@ -149,10 +140,12 @@ FlipNextCard ();
 				_score[player]++;
 				//TODO: consider playing a sound here...
 			}
-
+			else if ( player >= 0 && player < _score.Length)
+{
+_score[player]--;
+}
 			// stop the game...
 			_started = false;
-			_gameTimer.Stop ();
 		}
 	
 		#region Snap Game Unit Tests
@@ -188,4 +181,3 @@ FlipNextCard ();
 		#endregion
 	}
 }
-
